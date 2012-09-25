@@ -19,13 +19,6 @@ wget -m -i urls.txt
 
 for i in $( ls althingi.is/lagas/ );
 do
-	echo $i > lagasafn/version
-	( cd lagasafn; git add version; git commit -m "Útgáfa $i"; )
+	( cd lagasafn && git rm -r --ignore-unmatch * && unzip ../althingi.is/lagas/$i/allt.zip && git add . && git commit -m "Útgáfa $i"; )
 done
-
-CURRDIR=`pwd`
-(
-	cd lagasafn;
-	git filter-branch --tree-filter "unzip ${CURRDIR}/althingi.is/lagas/`cat version`/allt.zip"
-)
 
