@@ -19,6 +19,11 @@ wget -m -i urls.txt
 
 for i in $( ls althingi.is/lagas/ );
 do
-	( cd lagasafn && git rm -r --ignore-unmatch * && unzip ../althingi.is/lagas/$i/allt.zip && git add . && git commit -m "Útgáfa $i"; )
+	(
+		cd lagasafn &&
+		git rm -r --ignore-unmatch * &&
+		unzip ../althingi.is/lagas/$i/allt.zip &&
+		git add . && git commit -m "Útgáfa $i";
+	)
 done
 
