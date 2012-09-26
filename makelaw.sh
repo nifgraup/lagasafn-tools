@@ -23,6 +23,14 @@ do
 		cd lagasafn &&
 		git rm -r --ignore-unmatch * &&
 		unzip ../althingi.is/lagas/$i/allt.zip &&
+
+		#filters:
+		#
+		#Remove teljar.is & google analytics
+		find . -name "*.html" | while read file; do
+			sed -i '/<!-- Virk vefmaeling byrjar/,$d' $file
+		done
+
 		git add . && git commit -m "Útgáfa $i";
 	)
 done
