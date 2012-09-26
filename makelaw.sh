@@ -15,6 +15,7 @@ wget -m -i urls.txt
 	cd lagasafn;
 	git config user.name "Forseti Íslands";
 	git config user.email "forseti@forseti.is";
+	git remote add origin https://nifgraup@github.com/nifgraup/lagasafn.git
 )
 
 for i in $( ls althingi.is/lagas/ );
@@ -26,9 +27,9 @@ do
 
 		#filters:
 		#
-		#Remove teljar.is & google analytics
 		find . -name "*.html" | while read file; do
-			sed -i '/<!-- Virk vefmaeling byrjar/,$d' $file
+			LC_ALL=en_US sed -i '/Prenta.*tveimur/d' $file #remove timestamp
+			sed -i '/<!-- Virk vefmaeling byrjar/,$d' $file #Remove teljar.is & google analytics
 		done
 
 		git add . && git commit -m "Útgáfa $i";
