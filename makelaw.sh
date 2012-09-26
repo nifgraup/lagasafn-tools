@@ -5,7 +5,7 @@
 #		timestamp
 #		Nafn á forseta Íslands
 
-wget http://althingi.is/vefur/eldri-utg.html
+wget -N --no-remove-listing http://althingi.is/vefur/eldri-utg.html
 grep -o 'lagas/.*/allt.zip' eldri-utg.html | awk '{ print "http://althingi.is/"$0; }' > urls.txt
 
 wget -m -i urls.txt
