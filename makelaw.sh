@@ -40,6 +40,7 @@ do
 			#remove timestamp
 			#remove teljar.is & google analytics
 			LC_ALL=en_US sed -i -e '/Prenta.*tveimur/d' \
+					    -e '/Ferill m.lsins . Al.ingi/d' \
 			                    -e '/<!-- Virk vefmaeling byrjar/,$d' $file
 		done
 
