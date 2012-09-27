@@ -3,9 +3,7 @@
 # TODO
 #	normalize html
 #		remove newer timestamping format in html
-#		remove "Ferill málsins á Alþingi" (or include it from the beginning)
 #		html tidy
-#		use of <a, <!a and <!!a
 #	fix commit message
 #		timestamp
 #		(Nafn á forseta Íslands)
@@ -32,16 +30,21 @@ for i in $( ls althingi.is/lagas/ );
 do
 	(
 		cd lagasafn
-		git rm -r --ignore-unmatch *
-		unzip ../althingi.is/lagas/$i/allt.zip
+		git rm -q -r --ignore-unmatch *
+		unzip -q ../althingi.is/lagas/$i/allt.zip
+#		chmod -R -x *
 
 		# html normalizing
 		find . -name "*.html" | while read file; do
-			#remove timestamp
-			#remove teljar.is & google analytics
+			# remove timestamp
+			# remove links to althingi.is with info about the process
+			# remove teljar.is & google analytics
+			# remove added exclamation mark in links
 			LC_ALL=en_US sed -i -e '/Prenta.*tveimur/d' \
-					    -e '/Ferill m.lsins . Al.ingi/d' \
-			                    -e '/<!-- Virk vefmaeling byrjar/,$d' $file
+					-e '/Ferill m.lsins . Al.ingi/d' \
+					-e '/<!-- Virk vefm..\?ling byrjar/,$d' \
+					-e 's/<!*a/<a/g' $file
+#			tidy -q -m $file
 		done
 
 		git add .
