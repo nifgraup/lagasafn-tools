@@ -40,10 +40,13 @@ do
 			# remove links to althingi.is with info about the process
 			# remove teljar.is & google analytics
 			# remove added exclamation mark in links
+			# remove absolut link to althingi.is and and replace with a relative link in this dir
 			LC_ALL=en_US sed -i -e '/Prenta.*tveimur/d' \
 					-e '/Ferill m.lsins . Al.ingi/d' \
 					-e '/<!-- Virk vefm..\?ling byrjar/,$d' \
-					-e 's/<!*a/<a/g' $file
+					-e 's/<!*a/<a/g' \
+					-e "s/http:\/\/www.althingi.is\/lagas\/$i\///g" \
+					$file
 #			tidy -q -m $file
 		done
 
