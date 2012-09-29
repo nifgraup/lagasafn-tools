@@ -32,17 +32,26 @@ do
 		cd lagasafn
 		git rm -q -r --ignore-unmatch *
 		unzip -q ../althingi.is/lagas/$i/allt.zip
-#		chmod -R -x *
 
 		# html normalizing
 		find . -name "*.html" | while read file; do
+			chmod 644 $file
+	
+			# remove carriage return, required for removal of lines at eof
+			# add newline at end of file, will be removed later if not needed
+			sed -i -e 's/\r//g' \
+				-e '$G' \
+				$file
+
 			# remove timestamp
 			# remove links to althingi.is with info about the process
-			# remove teljar.is & google analytics
+			# remove extra newlines at eof
+                        # remove teljar.is & google analytics
 			# remove added exclamation mark in links
 			# remove absolut link to althingi.is and and replace with a relative link in this dir
 			LC_ALL=en_US sed -i -e '/Prenta.*tveimur/d' \
 					-e '/Ferill m.lsins . Al.ingi/d' \
+					-e :a -e '/^\n*$/{$d;N;};/\n$/ba' \
 					-e '/<!-- Virk vefm..\?ling byrjar/,$d' \
 					-e 's/<!*a/<a/g' \
 					-e "s/http:\/\/www.althingi.is\/lagas\/$i\///g" \
