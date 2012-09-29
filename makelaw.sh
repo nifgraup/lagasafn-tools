@@ -52,6 +52,7 @@ do
 			# remove added exclamation mark in links
 			# remove absolut link to althingi.is and and replace with a relative link in this dir
 			# remove html & body tags when present at the end of the last line
+			# add head tag if missing
 			LC_ALL=en_US sed -i -e '/Prenta.*tveimur/d' \
 					-e '/Ferill m.lsins . Al.ingi/d' \
 					-e :a -e '/^\n*$/{$d;N;};/\n$/ba' \
@@ -59,12 +60,14 @@ do
 					-e 's/<!*a/<a/g' \
 					-e "s/http:\/\/www.althingi.is\/lagas\/$i\///g" \
 					-e 's/<\/body><\/html>//' \
+					-e 's/\(<head>\)\?<title>/<head><title>/' -e 's/<\/title>\(<\/head>\)\?/<\/title><\/head>/' \
 					$file
 #			tidy -q -m $file
 		done
 
 		git add .
 		git commit -q -m "Útgáfa $i" --date "`date --date "$COMMITDATE"`"
+		echo "Commit version $i"
 	)
 done
 
