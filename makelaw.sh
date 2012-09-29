@@ -33,6 +33,8 @@ do
 		git rm -q -r --ignore-unmatch *
 		unzip -q ../althingi.is/lagas/$i/allt.zip
 
+		COMMITDATE=`find -name lagas.nr.html | xargs iconv -f iso-8859-1 -t utf-8 | grep tgáfa | grep -o  "\([[:digit:]]\*\. \)\?[[:alpha:]]* [[:digit:]][[:digit:]][[:digit:]][[:digit:]]" | sed -e 's/\.//' -e 's/júlí/july/' -e 's/október/october/' -e 's/janúar/january/' -e 's/febrúar/february/' -e 's/maí/may/' -e 's/júní/june/' -e 's/mars/march/' -e 's/^\([[:alpha:]]\)/1 \1/'`
+		
 		# html normalizing
 		find . -name "*.html" | while read file; do
 			chmod 644 $file
@@ -62,7 +64,7 @@ do
 		done
 
 		git add .
-		git commit -m "Útgáfa $i"
+		git commit -q -m "Útgáfa $i" --date "`date --date "$COMMITDATE"`"
 	)
 done
 
