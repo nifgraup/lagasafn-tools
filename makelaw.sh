@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # TODO
+#	use markdown?
+#		skip unnecessary html sanitation, let pandoc take care of it.
+#		fix html links to markdown links
 #	normalize html
 #		remove name attribute?
 #		remove newer timestamping format in html
