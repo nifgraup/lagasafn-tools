@@ -2,6 +2,7 @@
 
 # TODO
 #	normalize html
+#		remove name attribute?
 #		remove newer timestamping format in html
 #		html tidy
 #	fix commit message
@@ -48,7 +49,7 @@ do
 			# remove timestamp
 			# remove links to althingi.is with info about the process
 			# remove extra newlines at eof
-                        # remove teljar.is & google analytics
+			# remove teljar.is & google analytics
 			# remove added exclamation mark in links
 			# remove absolut link to althingi.is and and replace with a relative link in this dir
 			# remove html & body tags when present at the end of the last line
@@ -59,7 +60,7 @@ do
 					-e '/<!-- Virk vefm..\?ling byrjar/,$d' \
 					-e 's/<!*a/<a/g' \
 					-e "s/http:\/\/www.althingi.is\/lagas\/$i\///g" \
-					-e 's/<\/body><\/html>//' \
+					-e 's/\(<\/body>\)\?<\/html>//' \
 					-e 's/\(<head>\)\?<title>/<head><title>/' -e 's/<\/title>\(<\/head>\)\?/<\/title><\/head>/' \
 					$file
 #			tidy -q -m $file
