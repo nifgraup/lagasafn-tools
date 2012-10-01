@@ -14,7 +14,7 @@
 
 # Download zip archives
 wget -q -N --no-remove-listing http://althingi.is/vefur/eldri-utg.html
-grep -o 'lagas/.*/allt.zip' eldri-utg.html | awk '{ print "http://althingi.is/"$0; }' > urls.txt
+grep -o 'lagas/.*/allt.zip' eldri-utg.html | xargs printf "http://althingi.is/%s\n" > urls.txt
 wget -q -m -i urls.txt
 
 
