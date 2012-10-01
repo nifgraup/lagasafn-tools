@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # TODO
-#	markdown
+#	textile
 #		fix infinitive loop in pandoc
-#		fix html links to markdown links. Nb. don't convert external links to althingi.is
+#		fix html links to textile links. Nb. don't convert external links to althingi.is
 #	normalize html
 #		skip unnecessary html sanitation, let pandoc take care of it.
 #		remove newer timestamping format in html
@@ -61,11 +61,11 @@ do
 					-e "s/http:\/\/www.althingi.is\/lagas\/$i\///g" \
 					-e 's/\(<\/body>\)\?<\/html>//' \
 					-e 's/\(<head>\)\?<title>/<head><title>/' -e 's/<\/title>\(<\/head>\)\?/<\/title><\/head>/' \
-					| pandoc +RTS -K1844674407370955161 -RTS -f html -t markdown > `dirname $file`/`basename $file .html`.md
+					| pandoc +RTS -K1844674407370955161 -RTS -f html -t textile > `dirname $file`/`basename $file .html`.textile
 			rm $file
 		done
 
-		ln -s kaflar.md README.md
+		ln -s kaflar.textile README.textile
 		git add .
 		git commit -q -m "Útgáfa $i" --date "`date --date "$COMMITDATE"`"
 	)
