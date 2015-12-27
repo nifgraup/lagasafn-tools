@@ -13,10 +13,12 @@ prepare:
 	grep -o 'lagasafn/.*/allt.zip' zip-skra-af-lagasafni | xargs printf "http://althingi.is/%s\n" > urls.txt
 	wget -q -m -i urls.txt
 
-${repo}:
+${repo}: urls.txt
 	${git} init --bare
-	${git} remote add origin https://nifgraup@github.com/nifgraup/lagasafn.git
-	cd ${repo} && ${importzips} ../althingi.is/lagasafn/zip/*/allt.zip
+	${git} remote add origin https://nifgraup@github.com/nifgraup/lagasafn.git || true
+	${git} branch -D import-zips || true
+	${git} tag | xargs ${git} tag -d
+	cd ${repo} && ${importzips} ../althingi.is/lagasafn/zip/*/allt.zip || true
 
 ${first}: ${repo}
 	${git} branch -f $@ import-zips
